@@ -7,7 +7,7 @@ let motoristas= [
     {"primeiro_nome":"Jakie","ultimo_nome":"Adran","cidade":"Colcabamba","pais":"Peru","marca":"Pontiac","modelo":"Montana","ano":2005},
     {"primeiro_nome":"Regan","ultimo_nome":"Malkin","cidade":"Žitenice","pais":"Czech Republic","marca":"Volkswagen","modelo":"GTI","ano":2009},
     {"primeiro_nome":"Fidelio","ultimo_nome":"Arblaster","cidade":"Rožaje","pais":"Montenegro","marca":"Dodge","modelo":"Ram 2500","ano":1994},
-    {"primeiro_nome":"Neddy","ultimo_nome":"Dinneges","cidade":"Corona","estado":"California","pais":"United States","marca":"Mitsubishi","modelo":"Excel","ano":1989},
+    {"primeiro_nome":"Neddy","ultimo_nome":"Dinneges","cidade":"Corona","pais":"United States","marca":"Mitsubishi","modelo":"Excel","ano":1989},
     {"primeiro_nome":"Heindrick","ultimo_nome":"Balleine","cidade":"Campaka","pais":"Indonesia","marca":"Kia","modelo":"Amanti","ano":2004},
     {"primeiro_nome":"Quillan","ultimo_nome":"Tegeller","cidade":"Chivhu","pais":"Zimbabwe","marca":"Honda","modelo":"Pilot","ano":2002},
     {"primeiro_nome":"Curcio","ultimo_nome":"Hacaud","cidade":"Longgang","pais":"China","marca":"Dodge","modelo":"Intrepid","ano":2001},
@@ -15,28 +15,43 @@ let motoristas= [
     {"primeiro_nome":"Syman","ultimo_nome":"Finding","cidade":"Trawniki","pais":"Poland","marca":"GMC","modelo":"Savana 3500","ano":2007},
     {"primeiro_nome":"Cori","ultimo_nome":"Ridd","cidade":"Castlebridge","pais":"Ireland","marca":"Mercedes-Benz","modelo":"500E","ano":1992}
 ]
-
 const hello = (req,res)=>{
     let prim = 'ronnison'//req.params.id;
     res.send('<h1>Hello World! ' + nome + '</h1>');
 };
 
+// 1 Questão
 const getCarros = (req,res)=>{
     let carro = []
-    //for (c in motoristas) {
-        carro = motoristas.map(({marca, modelo, ano}) => ({marca, modelo, ano}));
-    //}
+    carro = motoristas.map(({marca, modelo, ano}) => ({marca, modelo, ano}));
     res.json(carro);
 }
 
+// 2 Questão
+const getDonos = (req,res)=>{
+    let dono = []
+    dono = motoristas.map(({primeiro_nome}) => ({primeiro_nome}));
+    res.json(dono);
+}
+
+
 const getMotorista = (req,res)=>{
     let primeiro_nome = req.params.primeiro_nome;
-    let dono = motoristas.find(cust => cust.name === nome);
+    let dono = motoristas.find(cust => cust.primeiro_nome === primeiro_nome);
     let sts = dono ? 200 : 404;
     if(dono) {
-        res.status(sts).json(dono);
+        let motorista = {
+            primeiro_nome: dono.primeiro_nome,
+            ultimo_nome: dono.ultimo_nome,
+            cidade: dono.cidade,
+            pais: dono.pais,
+            marca: dono.modelo,
+            modelo: dono.modelo,
+            ano: dono.ano
+        }
+        res.status(sts).json(motorista);
     } else {
-        res.status(sts).send('dono not found!');
+        res.status(sts).send('motorista not found!');
     }
 }
 
@@ -98,7 +113,8 @@ const patchCliente = (req,res) => {
 
 //ROTAS DA API
 app.get('/', hello);
-app.get('/clientes', getMotorista)
+app.get('/motorista/:primeiro_nome', getMotorista)
+app.get('/donos', getDonos);
 app.get('/carros', getCarros)
 //app.get('/clientes/:nome', getClienteByName)
 app.delete('/clientes/:id', delCliente)
