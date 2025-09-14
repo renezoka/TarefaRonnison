@@ -34,7 +34,7 @@ const getDonos = (req,res)=>{
     res.json(dono);
 }
 
-
+//3 Questão
 const getMotorista = (req,res)=>{
     let primeiro_nome = req.params.primeiro_nome;
     let dono = motoristas.find(cust => cust.primeiro_nome === primeiro_nome);
@@ -52,6 +52,23 @@ const getMotorista = (req,res)=>{
         res.status(sts).json(motorista);
     } else {
         res.status(sts).send('motorista not found!');
+    }
+}
+
+//4 Questão
+const getModelo = (req,res)=>{
+    let modelo = req.params.modelo;
+    let carro = motoristas.find(cust => cust.modelo === modelo);
+    let sts = carro ? 200 : 404;
+    if(carro) {
+        let motorista = {
+            primeiro_nome: carro.primeiro_nome,
+            ultimo_nome: carro.ultimo_nome,
+            modelo: carro.modelo,
+            }
+        res.status(sts).json(motorista);
+    } else {
+        res.status(sts).send('modelo not found!');
     }
 }
 
@@ -114,6 +131,7 @@ const patchCliente = (req,res) => {
 //ROTAS DA API
 app.get('/', hello);
 app.get('/motorista/:primeiro_nome', getMotorista)
+app.get('/modelo/:modelo', getModelo)
 app.get('/donos', getDonos);
 app.get('/carros', getCarros)
 //app.get('/clientes/:nome', getClienteByName)
