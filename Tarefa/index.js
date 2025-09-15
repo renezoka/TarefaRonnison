@@ -72,6 +72,19 @@ const getModelo = (req,res)=>{
     }
 }
 
+//5 Questão
+const delMotorista = (req,res)=>{
+    let primeiro_nome = req.params.primeiro_nome;
+    let index = motoristas.find(cust => cust.motorista === motorista);
+    let sts = primeiro_nome ? 200 : 404;
+    if(index !== -1) {
+        motoristas.splice(index, 1)
+        res.status(sts).send;
+    } else {
+        res.status(sts).send('motorista not found!');
+    }
+}
+
 const delCliente = (req,res)=>{
     let customerId = parseInt(req.params.id)
     let index = motoristas.findIndex(c => c.id === customerId)
@@ -134,6 +147,7 @@ app.get('/motorista/:primeiro_nome', getMotorista)
 app.get('/modelo/:modelo', getModelo)
 app.get('/donos', getDonos);
 app.get('/carros', getCarros)
+app.delete('/delMotorista/:primeiro_nome', delMotorista)
 //app.get('/clientes/:nome', getClienteByName)
 app.delete('/clientes/:id', delCliente)
 app.post('/cliente',postCliente)
