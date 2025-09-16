@@ -130,6 +130,9 @@ app.get('/modelo/:modelo', getModelo)
 app.get('/donos', getDonos);
 app.get('/carros', getCarros)
 app.delete('/delMotorista/:id', delMotorista)
+app.patch('/motorista/:id/:carro', patchCarro)
+app.patch('/motorista/:id', patchMotorista)
+app.put('/motorista/:id',putMotorista)
 //app.get('/clientes/:nome', getClienteByName)
 app.listen(3000, ()=>{
     console.log('O servidor está funcionando na porta 3000')
