@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))
+
 let motoristas= [
     {"id":1,"primeiro_nome":"Jakie","ultimo_nome":"Adran","cidade":"Colcabamba","pais":"Peru","marca":"Pontiac","modelo":"Montana","ano":2005},
     {"id":2,"primeiro_nome":"Regan","ultimo_nome":"Malkin","cidade":"Žitenice","pais":"Czech Republic","marca":"Volkswagen","modelo":"GTI","ano":2009},
@@ -134,6 +135,10 @@ app.patch('/motorista/:id/:carro', patchCarro)
 app.patch('/motorista/:id', patchMotorista)
 app.put('/motorista/:id',putMotorista)
 //app.get('/clientes/:nome', getClienteByName)
-app.listen(3000, ()=>{
-    console.log('O servidor está funcionando na porta 3000')
+
+//app.listen(3000, ()=>{
+//    console.log('O servidor está funcionando na porta 3000')
+
+    app.listen(process.env.PORT, ()=>{
+    console.log(`executando na porta ${process.env.PORT}`)
 })
